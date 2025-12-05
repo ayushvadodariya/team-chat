@@ -9,29 +9,29 @@ dotenv.config();
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
-    cors: {
-        origin: "http://localhost:5173",
-        methods: ["GET", "POST"]
-    }
+  cors: {
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST'],
+  },
 });
 
 app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Server is running');
+  res.send('Server is running');
 });
 
 io.on('connection', (socket) => {
-    console.log('a user connected', socket.id);
+  console.log('a user connected', socket.id);
 
-    socket.on('disconnect', () => {
-        console.log('user disconnected', socket.id);
-    });
+  socket.on('disconnect', () => {
+    console.log('user disconnected', socket.id);
+  });
 });
 
 const PORT = process.env.PORT || 3000;
 
 httpServer.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
